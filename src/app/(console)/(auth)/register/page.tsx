@@ -18,7 +18,7 @@ const RegisterPage = () => {
       cpassword: form.cpassword.value,
     };
 
-    fetch('/api/register', {
+    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

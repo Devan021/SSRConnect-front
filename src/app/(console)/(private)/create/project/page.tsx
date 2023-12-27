@@ -23,12 +23,11 @@ const CreateProjectPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors: _ },
   } = useForm<Inputs>();
 
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-  console.log(errors);
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.error(data);
 
   useEffect(() => {
     new Uppy().use(DragDrop, { target: '#drag-drop' });

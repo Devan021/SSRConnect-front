@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown';
 
-const UserMoreMenu = ({ data } : { data: DataRow }) => {
+const UserMoreMenu = ({ data:_ } : { data: DataRow }) => {
   return (
       <DropdownMenu>
           <DropdownMenuTrigger asChild>

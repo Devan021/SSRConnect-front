@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { ITeam } from '@/app/(console)/types';
 
-const team = {
+const _ = {
   teamID: 'AM242021',
   mentor: {
     id: 12,

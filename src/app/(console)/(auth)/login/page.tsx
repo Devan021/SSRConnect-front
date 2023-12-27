@@ -18,7 +18,7 @@ const Login = () => {
       password: (target.elements.namedItem('password') as HTMLInputElement).value,
     };
 
-    fetch('/api/login/', {
+    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

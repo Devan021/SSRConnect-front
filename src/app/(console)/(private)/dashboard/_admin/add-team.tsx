@@ -1,41 +1,40 @@
 'use client';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { ChevronRightIcon } from 'lucide-react';
 
 import InputField from '@/components/InputField';
 import Button from '@/components/button';
 import UserPicker from '@/components/user-picker';
 
-const AddTeamForm = ({ handleClose: close }: { handleClose: () => void }) => {
+const AddTeamForm = ({ handleClose: _ }: { handleClose: () => void }) => {
     
   const [data, setData] = useState<any>(null);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleClose = () => setOpen(false);
 
   const handleAddTeam = (e: any) => {
     e.preventDefault();
     return;
-    fetch('/api/create/team/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if(res?.id) {
-          toast.success('Team created successfully');
-          setData(null);
-          close();
-        } else toast.error(res?.error?.message || 'Something went wrong');
-      })
-      .catch((error) => {
-        console.error(error?.code);
-      });
+    // fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/create/team/`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     if(res?.id) {
+    //       toast.success('Team created successfully');
+    //       setData(null);
+    //       close();
+    //     } else toast.error(res?.error?.message || 'Something went wrong');
+    //   })
+    //   .catch((error) => {
+    //     console.error(error?.code);
+    //   });
   };
     
   return (
@@ -47,7 +46,7 @@ const AddTeamForm = ({ handleClose: close }: { handleClose: () => void }) => {
                       required
                       label="Team ID"
                       value={data?.teamID}
-                      onChange={(e) => setData({ ...data, teamID: e.target.value })}
+                      onChange={(e: any) => setData({ ...data, teamID: e.target.value })}
                   />
                   <div className="w-full">
                       <div className="font-bold text-gray-900">
@@ -96,7 +95,7 @@ const AddTeamForm = ({ handleClose: close }: { handleClose: () => void }) => {
                   </Button>
               </div>
           </form>
-          <UserPicker open={open} setOpen={setOpen} setData={setData} data={data} type="MENTOR" />
+          <UserPicker open={open} setOpen={setOpen} />
       </div>
   );
 };

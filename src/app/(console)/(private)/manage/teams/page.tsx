@@ -37,7 +37,6 @@ const getTeams = async () => {
 const ManageTeamsPage = async () => {
 
   const teams = await getTeams();
-  console.log(teams);
 
   return (
       <ManageWrapper breadcrumbs={BREADCRUMBS} title="Manage Users" className="flex">

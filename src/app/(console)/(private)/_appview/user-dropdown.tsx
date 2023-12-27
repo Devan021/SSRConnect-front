@@ -18,7 +18,7 @@ const UserDropdown = () => {
   const user = useUser();
     
   const handleLogout = () => {
-    fetch('/api/logout/')
+    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/logout/`)
       .then((res) => {
         if(res.ok) {
           router.push('/login');

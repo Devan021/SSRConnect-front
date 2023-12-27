@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 const Projects = () => {
-  const [projects, setProjects] = useState<any>([]);
+  const [projects, _] = useState<any>([]);
 
   // useEffect(() => {
   //   const fetchprojects = async () => {

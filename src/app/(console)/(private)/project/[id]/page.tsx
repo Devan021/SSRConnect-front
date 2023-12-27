@@ -11,7 +11,7 @@ import getRole from '@/components/get-role';
 
 const ProjectPage = ({ params }: { params: { id: string } }) => {
 
-  const role = getRole();
+  const _ = getRole();
   const id = params.id.toUpperCase();
 
   const project = {

@@ -36,7 +36,6 @@ const getUsers = async () => {
 const ManageUserPage = async () => {
 
   const users = await getUsers();
-  console.log(users);
 
   return (
       <ManageWrapper breadcrumbs={BREADCRUMBS} title="Manage Users" className="flex">

@@ -14,7 +14,7 @@ const AddUserForm = ({ handleClose }: { handleClose: () => void }) => {
   
   const handleAddUser = (e: any) => {
     e.preventDefault();
-    fetch('/api/create/user/', {
+    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/create/user/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,21 +62,21 @@ const AddUserForm = ({ handleClose }: { handleClose: () => void }) => {
                   required
                   label="Name"
                   value={data?.name}
-                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                  onChange={(e:any) => setData({ ...data, name: e.target.value })}
               />
               <InputField
                   required
                   label="Email"
                   type="email"
                   value={data?.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
+                  onChange={(e:any) => setData({ ...data, email: e.target.value })}
               />
               {userType === 'STUDENT' && (
                   <InputField 
                       className="duration-200 transform transition" 
                       label="Team ID" 
                       value={data?.teamId}
-                      onChange={(e) => setData({ ...data, teamId: e.target.value })}
+                      onChange={(e: any) => setData({ ...data, teamId: e.target.value })}
                   />
               )}
               <Button variant="primary" type="submit" className="mt-2">
