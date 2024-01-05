@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 
 import AppContextProvider from '@/app/(console)/(private)/_appview/context';
+import SessionProvider from '@/app/(console)/context';
 
 const ConsoleLayout = ({ children }: { children: React.ReactNode }) => {
   
@@ -24,9 +25,11 @@ const ConsoleLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-      <AppContextProvider user={getUser()}>
-          {children}
-      </AppContextProvider>
+      <SessionProvider>
+          <AppContextProvider user={getUser()}>
+              {children}
+          </AppContextProvider>
+      </SessionProvider>
   );
 };
 

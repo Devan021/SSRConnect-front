@@ -1,12 +1,16 @@
 'use client';
 import Link from 'next/link';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 import Button from '@/components/button';
+import {auth} from '@/firebase/config';
+import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 
 const RegisterPage = () => {
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
 
   async function handleRegister(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -14,23 +18,27 @@ const RegisterPage = () => {
     const form = event.target as HTMLFormElement;
     const body = {
       email: form.email.value,
+      name: form.name.value,
       password: form.password.value,
       cpassword: form.cpassword.value,
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/register`, {
+    fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     }).then((res) => res.json()).then((res) => {
-      if(res.status === 200) {
-        localStorage.setItem('manauser', JSON.stringify({ id: res?.data?.id, email: body.email }));
-        window.location.href = '/new';
+      if(res?.user?.id) {
+        toast.success('Account created successfully!');
+        localStorage.setItem('ssr-user', JSON.stringify({ id: res?.data?.id, email: body.email }));
+        window.location.href = '/dashboard';
       } else {
-        setIsLoading(false);
+        toast.error(res.message || 'Something went wrong. Please try again later.');
       }
+      setIsLoading(false);
     }).catch((e) => {
       setIsLoading(false);
+      toast.error('Something went wrong. Please try again later.');
       console.error(e);
     });
   }
@@ -43,7 +51,7 @@ const RegisterPage = () => {
               </h1>
               <form className="space-y-4 md:space-y-6 mt-4" onSubmit={handleRegister}>
                   <div className="flex flex-col items-start">
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium">Your email</label>
+                      <label htmlFor="email" className="block mb-2 text-sm font-medium">Email</label>
                       <input
                           type="email"
                           name="email"
@@ -57,6 +65,17 @@ const RegisterPage = () => {
                           <span className="font-monospace bg-gray-200 py-0.5 px-2 mx-1 text-gray-600 rounded">.amrita.edu</span>
                           mail
                       </div>
+                  </div>
+                  <div className="flex flex-col items-start">
+                      <label htmlFor="email" className="block mb-2 text-sm font-medium">Name</label>
+                      <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                          placeholder="John Doe"
+                          required
+                      />
                   </div>
                   <div className="flex flex-col items-start">
                       <label htmlFor="password" className="block mb-2 text-sm font-medium">Password</label>
