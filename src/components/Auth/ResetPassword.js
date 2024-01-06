@@ -1,4 +1,4 @@
-'use client';
+// ResetPassword.js
 
 import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -6,6 +6,9 @@ import cn from 'classnames';
 import { Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import * as Yup from 'yup';
+import { sendPasswordResetEmail } from 'src/utils/utils'
+
+const crypto = require('crypto'); // Import the crypto library
 
 const ResetPasswordSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -17,14 +20,25 @@ const ResetPassword = () => {
   const [successMsg, setSuccessMsg] = useState(null);
 
   async function resetPassword(formData) {
-    const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
-      redirectTo: `${window.location.origin}/auth/update-password`,
-    });
+    const { email } = formData;
 
-    if (error) {
+    // Generate a unique token for password reset using crypto
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    // Save the resetToken to a secure place (e.g., Supabase table)
+
+    // Compose the password reset link
+    const resetLink = `${window.location.origin}/auth/update-password?token=${resetToken}`;
+
+    try {
+      // Send the password reset email using the utility function
+      await sendPasswordResetEmail(email, resetLink);
+
+      // Show success message
+      setSuccessMsg('Password reset instructions sent. Check your email.');
+    } catch (error) {
+      // Handle error
       setErrorMsg(error.message);
-    } else {
-      setSuccessMsg('Password reset instructions sent.');
     }
   }
 

@@ -28,3 +28,6 @@ const AuthProvider = ({ accessToken, children }) => {
 };
 
 export default AuthProvider;
+
+
+export default as d
